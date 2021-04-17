@@ -4,14 +4,16 @@ using EFCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCore.Data.Migrations
 {
     [DbContext(typeof(SamuraiContext))]
-    partial class SamuraiContextModelSnapshot : ModelSnapshot
+    [Migration("20210417094534_m2mmapping")]
+    partial class m2mmapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,27 +54,6 @@ namespace EFCore.Data.Migrations
                     b.HasIndex("SamuraiId");
 
                     b.ToTable("BattleSamurai");
-                });
-
-            modelBuilder.Entity("EFCore.Domain.Horse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SamuraiId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SamuraiId")
-                        .IsUnique();
-
-                    b.ToTable("Horse");
                 });
 
             modelBuilder.Entity("EFCore.Domain.Quote", b =>
@@ -125,15 +106,6 @@ namespace EFCore.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EFCore.Domain.Horse", b =>
-                {
-                    b.HasOne("EFCore.Domain.Samurai", null)
-                        .WithOne("Horse")
-                        .HasForeignKey("EFCore.Domain.Horse", "SamuraiId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EFCore.Domain.Quote", b =>
                 {
                     b.HasOne("EFCore.Domain.Samurai", "Samurai")
@@ -147,8 +119,6 @@ namespace EFCore.Data.Migrations
 
             modelBuilder.Entity("EFCore.Domain.Samurai", b =>
                 {
-                    b.Navigation("Horse");
-
                     b.Navigation("Quotes");
                 });
 #pragma warning restore 612, 618
